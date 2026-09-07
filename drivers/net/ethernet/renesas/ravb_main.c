@@ -1591,6 +1591,13 @@ static netdev_tx_t ravb_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 						 len, DMA_TO_DEVICE);
 			}
 			goto unmap;
+	/* Before ringing the doorbell we need to make sure that the latest
+	 * writes have been committed to memory, otherwise it could delay
+	 * things until the doorbell is rang again.
+	 * This is in replacement of the read operation mentioned in the HW
+	 * manuals.
+	 */
+	dma_wmb();
 		}
 		ts_skb->skb = skb_get(skb);
 		ts_skb->tag = priv->ts_skb_tag++;
