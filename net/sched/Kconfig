@@ -4,7 +4,6 @@
 
 menuconfig NET_SCHED
 	bool "QoS and/or fair queueing"
-	select NET_SCH_FIFO
 	---help---
 	  When the kernel has several packets to send out over a network
 	  device, it has to decide which ones to send first, which ones to
